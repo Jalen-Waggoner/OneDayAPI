@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OneDay.Data
 {
-    public class Floria Entity
+    public class FloriaEntity
     {
         [Key]
         public int Id { get; set; }
@@ -16,7 +16,7 @@ namespace OneDay.Data
         public string Title { get; set; }
 
         [Required]
-        public string Content{ get; set; }
+        public string? Content { get; set; }
         
     }
 }
