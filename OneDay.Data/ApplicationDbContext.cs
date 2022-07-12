@@ -6,6 +6,8 @@ public class ApplicationDbContext : DbContext
     {
 
     }
-    public DbSet<FloriaEntity> Florias {get; set; }
+    public DbSet<FloriaEntity> Florias { get; set; }
 
+    public DbSet<PostEntity> Posts { get; set; }
+    public DbSet<JalenEntity> Jalens { get; set; }
 }
