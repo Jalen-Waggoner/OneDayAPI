@@ -6,4 +6,5 @@ public class ApplicationDbContext : DbContext
     {
         
     }
+    public DbSet<PostEntity> Posts { get; set; }
 }
