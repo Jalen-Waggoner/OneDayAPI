@@ -1,4 +1,5 @@
 using System.Text;
+using OneDay.Services.Jalen;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OneDay.Data;
@@ -6,8 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Add connection string here
-var connectionString = builder.Configuration.GetConnectionString("FKaramdadConnection");
+var connectionString = builder.Configuration.GetConnectionString("JalenConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddHttpContextAccessor();
+
+// Add User Service/Interface for Dependency Injection here
+builder.Services.AddScoped<IJalenService, JalenService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -12,12 +12,14 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OneDay.Data\OneDay.Data.csproj" />
     <ProjectReference Include="..\OneDay.Models\OneDay.Models.csproj" />
+    <ProjectReference Include="..\OneDay.Services\OneDay.Services.csproj" />
   </ItemGroup>
 
 </Project>
