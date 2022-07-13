@@ -5,4 +5,5 @@ namespace OneDay.Services.Jalen;
     {
         // Task<IEnumerable<JalenListItem>> GetAllJalensAsync();
         Task<bool> CreateJalenAsync(JalenCreate request);
+        Task<JalenDetail> GetJalenByIdAsync(int jalenId);
     }

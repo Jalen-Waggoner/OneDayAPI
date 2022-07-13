@@ -32,5 +32,15 @@ namespace OneDay.WebAPI.Controllers
 
             return BadRequest("Jalen could not be created.");
         }
+
+        [HttpGet("{jalenId:int}")]
+        public async Task<IActionResult> GetNoteById([FromRoute] int jalenId)
+        {
+            var detail = await _jalenService.GetJalenByIdAsync(jalenId);
+
+            return detail is not null
+            ? Ok(detail)
+            : NotFound();
+        }
     }
 }

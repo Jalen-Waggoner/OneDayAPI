@@ -1,14 +1,17 @@
+using System;
 using System.Security.Claims;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using OneDay.Data;
 using OneDay.Models.Jalen;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 
+
 namespace OneDay.Services.Jalen;
     public class JalenService : IJalenService
     {
-        private readonly int _jalenId;
         private readonly ApplicationDbContext _dbContext;
         public JalenService (ApplicationDbContext dbContext)
         {
@@ -29,5 +32,15 @@ namespace OneDay.Services.Jalen;
             return numberOfChanges == 1;
         }
 
-
+        public async Task<JalenDetail> GetJalenByIdAsync(int jalenId)
+        {
+            var jalenEntity = await _dbContext.Jalens.FindAsync(jalenId);
+            
+            return jalenEntity is null ? null : new JalenDetail
+            {
+                Id = jalenEntity.Id,
+                Name = jalenEntity.Name,
+                Content = jalenEntity.Content
+            };
+        }
     }
