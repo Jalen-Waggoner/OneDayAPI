@@ -2,59 +2,47 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using OneDay.Data;
+using OneDay.Models.UserFloria;
 
 namespace OneDay.Services
 {
-    public class PostService : IFloriaService
+    public class FloriaService : IFloriaService
     {
         private readonly ApplicationDbContext _context;
         public FloriaService (ApplicationDbContext context)
         {
             _context = context;
         }
-        public async Task<bool> RegisterUserAsync(UserFloria model)
+        public async Task<bool> CreateNewComment(UserFloria comment)
         {
-            if(await GetUserByEmailAsync(model.Email) !=null || await GetUserByUsernameAsync(model.Username) !=null)
-            return false;
-
             var entity = new FloriaEntity
             {
-                Email = model.Email,
-                Username = model.Username,
-                DateCreated = DateTime.Now
+                Title= comment.Title,
+                Content= comment.Content,
             };
 
-            _context.Users.Add(entity);
+            _context.Florias.Add(entity);
             var numberOfChanges = await _context.SaveChangesAsync();
 
             return numberOfChanges == 1;
         }
 
-        public async Task<FloriaDetail> GetUserByIdAsync (int userId)
+        public async Task<FloriaDetail> GetCommentByIdAsync (int commentId)
         {
-            var entity = await _context.Users.FindAsync(userId);
+            var entity = await _context.Florias.FindAsync(commentId);
             if(entity is null)
                 return null;
             
-            var userDetail = new FloriaDetail
+            return entity is null ? null : new FloriaDetail
             {
                 Id = entity.Id,
-                Email = entity.Email,
-                Username = entity.Username,
+                Title = entity.Title,
+                Content = entity.Content
             };
-            return userDetail;
         }
-        public async Task<FloriaEntity> GetUserByEmailAsync(string email)
-        {
-            return await _context.Users.FirstOrDefaultAsync(user => user.Email.ToLower() == email.ToLower());
-        }
-
-        private async Task<FloriaEntity> GetUserByUsernameAsync(string username)
-        {
-            return await _context.Users.FirstOrDefaultAsync(user => user.Username.ToLower() == username.ToLower());
+        
         }
     }
 
     
-}

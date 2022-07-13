@@ -10,7 +10,7 @@ namespace OneDay.Services
 {
     public interface IFloriaService
     {
-        Task<bool> RegisterUserAsync(UserFloria model);
-        Task<FloriaDetail> GetUserByIdAsync(int userId);
+        Task<bool> CreateNewComment(UserFloria model);
+        Task<FloriaDetail> GetCommentByIdAsync(int userId);
     }
 }

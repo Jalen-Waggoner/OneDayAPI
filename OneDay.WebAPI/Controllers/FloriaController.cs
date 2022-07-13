@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using OneDay.Models;
 using OneDay.Services;
 using OneDay.Data;
+using OneDay.Models.UserFloria;
 
 namespace OneDay.WebAPI.Controllers
 {
@@ -15,28 +16,33 @@ namespace OneDay.WebAPI.Controllers
     public class FloriaController : ControllerBase
     {
         private readonly IFloriaService _service;
-
-        public FloriaController(IFloriaService service)
+        public FloriaController(IFloriaService Service)
         {
-            _service = service;
-
+            _service = Service;
         }
-        [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserFloria model)
+
+        [HttpPost]
+        public async Task<IActionResult> CommentPost([FromBody] UserFloria comment)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid) 
             {
                 return BadRequest(ModelState);
             }
-
-            var registerResult = await _service.RegisterUserAsync(model);
-            if(registerResult)
+            if (await _service.CreateNewComment(comment))
             {
-                return Ok("User was registered");
+                return Ok();
             }
-            return BadRequest("User could not be registered.");
+                
+            return BadRequest();
+        }
 
+        [HttpGet("{commentId:int}")]
+        public async Task<IActionResult> GetCommentById([FromRoute] int commentId)
+        {
+            var detail = await _service.GetCommentByIdAsync(commentId);
+            return detail is not null
+            ? Ok(detail)
+            : NotFound();
+        }
         }
     }
-
-}
